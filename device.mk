@@ -14,8 +14,8 @@
 # limitations under the License.
 #
 
-# Enable project quotas and casefolding for emulated storage without sdcardfs
-#$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
@@ -32,31 +32,41 @@ LOCAL_PATH := device/xiaomi/munch
 PRODUCT_SHIPPING_API_LEVEL := 31
 
 # A/B
+ENABLE_VIRTUAL_AB := true
+AB_OTA_UPDATER := true
+
+AB_OTA_PARTITIONS += \
+    boot \
+    dtbo \
+    odm \
+    product \
+    system \
+    system_ext \
+    vbmeta \
+    vbmeta_system \
+    vendor \
+    vendor_boot
+
+PRODUCT_PACKAGES += \
+    otapreopt_script \
+    checkpoint_gc \
+    update_engine \
+    update_engine_sideload \
+    update_verifier
+
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
     POSTINSTALL_PATH_system=system/bin/otapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
-
+    
 PRODUCT_PACKAGES += \
-    otapreopt_script
-
-# Update engine
-PRODUCT_PACKAGES += \
-    update_engine \
-    update_engine_sideload \
-    update_verifier
-
-PRODUCT_PACKAGES_DEBUG += \
-    update_engine_client
-
-# Boot control HAL
-PRODUCT_PACKAGES += \
-    android.hardware.boot@1.1-impl \
+    android.hardware.boot@1.1-impl-qti \
+    android.hardware.boot@1.1-impl-qti.recovery \
     android.hardware.boot@1.1-service \
     bootctrl.kona \
     bootctrl.kona.recovery
-
+	
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
 
@@ -70,8 +80,8 @@ PRODUCT_PACKAGES += \
     fastbootd
 
 # Keystore
-PRODUCT_PACKAGES += \
-    android.system.keystore2
+#PRODUCT_PACKAGES += \
+#    android.system.keystore2
 
 # Screen
 TARGET_SCREEN_HEIGHT := 2400

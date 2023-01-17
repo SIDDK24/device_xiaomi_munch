@@ -14,9 +14,6 @@
 # limitations under the License.
 #
 
-# Inherit from the common Open Source product configuration
-$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
-
 # Inherit from this product for devices that support only 64-bit apps using:
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 
