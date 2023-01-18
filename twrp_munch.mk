@@ -27,5 +27,5 @@ $(call inherit-product, vendor/pb/config/common.mk)
 PRODUCT_DEVICE := munch
 PRODUCT_NAME := twrp_munch
 PRODUCT_BRAND := POCO
-PRODUCT_MODEL := POCO F4
+PRODUCT_MODEL := F4
 PRODUCT_MANUFACTURER := xiaomi
